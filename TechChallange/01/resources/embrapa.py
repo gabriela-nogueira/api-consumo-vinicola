@@ -6,8 +6,8 @@ from io import StringIO
 def get_url():
     return "http://vitibrasil.cnpuv.embrapa.br/download"
 
-""" Retorna os dados do arquivo """
-def get_data(file: str, delimiter: str, ano: str = None):
+""" Retorna os dados do arquivo de processamento individualmente """
+def get_data_processamento(file: str, delimiter: str, ano: str = None):
 
     if (ano is not None):
         if (int(ano) < 1970 or int(ano) > 2022):
@@ -44,3 +44,4 @@ def get_data(file: str, delimiter: str, ano: str = None):
 
     else:
         return "Não foi possível ler o arquivo"
+
