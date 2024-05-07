@@ -2,20 +2,19 @@ import requests
 import csv
 from io import StringIO
 
-tipos_processamento = ['Viniferas','Americanas','Mesa','Semclass']
+ano = "1970"
+url = "http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv"
+response = requests.get(url)
+
 csv_data = []
 
-for processamento in tipos_processamento:
-    index_aux = tipos_processamento.index(processamento)
-    csv_data.append({'id_processamento': index_aux + 1, 'tipo_processamento' : processamento})
-    url = f"http://vitibrasil.cnpuv.embrapa.br/download/Processa{processamento}.csv"
-    response = requests.get(url, headers={'Accept-Charset': 'latin-1'})
+header = ['id','produto','produto_2', *range(1970,2023)]
 
-    with StringIO(response.text) as csv_file:
-        reader = csv.DictReader(csv_file, delimiter='\t')
-        for row in reader:
-            data = {}
-            data.update(dict({key : value.encode('latin-1').decode('utf-8') for key, value in row.items()}))
-            csv_data[tipos_processamento.index(processamento)].update({f"data_{data['control']}": data})
+with StringIO(response.text) as csv_file:
+    reader = csv.DictReader(csv_file, fieldnames=header, delimiter=';')
+    for row in reader:
+        csv_data.append(dict(row))
+
+dados_por_ano = [{'id': row['id'] , 'produto': row['produto'], ano: row[ano]} for row in csv_data]
 
 csv_data

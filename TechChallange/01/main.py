@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from resources.processamento import get_processamento_tipo, get_processamento_ano, get_processamento
 from resources.producao import get_data_producao, get_data_producao_ano
+from resources.comercializacao import get_dados_comercializacao, get_dados_comercializacao_ano
+from resources.importacao import get_importacao, get_importacao_ano, get_importacao_tipo
 
 app = FastAPI()
 
@@ -8,12 +10,22 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
+@app.get('/importacao')
+async def importacao():
+    return get_importacao()
+
+@app.get('/importacao/{tipo}')
+async def importacao_tipo(tipo: str):
+    return get_importacao_tipo(tipo)
+
+@app.get('/importacao/{ano}')
+async def importacao_ano(ano: str):
+    return get_importacao_ano(ano)
+
 @app.get("/processamento")
 async def processamento():
     """ Retorna todos o processamento entre os anos de 1970 até 2022 (qualquer valor diferente disso, irá retornar como erro)"""
-     
     return get_processamento()
-
 
 @app.get("/processamento/{tipo}")
 async def processamento_tipo(tipo: str):
@@ -58,6 +70,14 @@ async def get_producao():
 async def get_producao(ano: str):
     """ Retorna a producao do ano informado que precisa estar entre os anos de 1970 até 2022 (qualquer valor diferente disso, irá retornar como erro)"""
     return get_data_producao_ano(ano)
+
+@app.get("/comercializacao")
+async def get_comercializacao():
+    return get_dados_comercializacao()
+
+@app.get("/comercializacao/{ano}")
+async def get_comercializacao(ano: str):
+    return get_dados_comercializacao_ano(ano)
 
 # adicionando para testes 
 if __name__ == '__main__':
