@@ -1,37 +1,29 @@
 import requests
 import csv
 from io import StringIO
-from resources.embrapa import get_data_processamento
+from resources.embrapa import get_data_processamento, get_data_importacao
 
 
 """ Define metodo para recuperar dados  """
 def get_importacao_tipo(tipo: str):
-    if tipo == "1":
-        return get_data_processamento("ImpVinhos", "\t")
-    elif tipo == "2":
-        return get_data_processamento("ImpEspumantes", "\t")
-    elif tipo == "3":
-        return get_data_processamento("ImpFrescas", "\t")
-    elif tipo == "4":
-        return get_data_processamento("ImpPassas", "\t")
-    elif tipo == "5":
-        return get_data_processamento("ImpSuco", "\t")
-    else:
-        return "Tipo de processamento inválido"
+    dict_tipo = {
+        "1" : "ImpVinhos",
+        "2" : "ImpEspumantes",
+        "3" : "ImpFrescas",
+        "4" : "ImpPassas",
+        "5" : "ImpSuco"
+    }
+    return get_data_importacao(dict_tipo[tipo], ";")
 
 def get_importacao_ano(tipo: str, ano: str):
-    if tipo == "1":
-        return get_data_processamento("ImpVinhos", "\t", ano)
-    elif tipo == "2":
-        return get_data_processamento("ImpEspumantes", "\t", ano)
-    elif tipo == "3":
-        return get_data_processamento("ImpFrescas", "\t", ano)
-    elif tipo == "4":
-        return get_data_processamento("ImpPassas", "\t", ano)
-    elif tipo == "5":
-        return get_data_processamento("ImpSuco", "\t", ano)
-    else:
-        return "Tipo de processamento inválido"
+    dict_tipo = {
+        "1" : "ImpVinhos",
+        "2" : "ImpEspumantes",
+        "3" : "ImpFrescas",
+        "4" : "ImpPassas",
+        "5" : "ImpSuco"
+    }
+    return get_data_importacao(dict_tipo[tipo], ";", ano)
 
 def get_importacao():
     tipos_importacao = ['Vinhos','Espumantes','Frescas','Passas', 'Suco']

@@ -18,9 +18,9 @@ async def importacao():
 async def importacao_tipo(tipo: str):
     return get_importacao_tipo(tipo)
 
-@app.get('/importacao/{ano}')
-async def importacao_ano(ano: str):
-    return get_importacao_ano(ano)
+@app.get('/importacao/{tipo}/{ano}')
+async def importacao_ano(tipo: str, ano: str):
+    return get_importacao_ano(tipo, ano)
 
 @app.get("/processamento")
 async def processamento():
