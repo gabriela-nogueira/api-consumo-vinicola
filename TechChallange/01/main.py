@@ -3,6 +3,7 @@ from resources.processamento import get_processamento_tipo, get_processamento_an
 from resources.producao import get_data_producao, get_data_producao_ano
 from resources.comercializacao import get_dados_comercializacao, get_dados_comercializacao_ano
 from resources.importacao import get_importacao, get_importacao_ano, get_importacao_tipo
+from resources.exportacao import get_exportacao, get_exportacao_tipo
 
 app = FastAPI()
 
@@ -78,6 +79,14 @@ async def get_comercializacao():
 @app.get("/comercializacao/{ano}")
 async def get_comercializacao(ano: str):
     return get_dados_comercializacao_ano(ano)
+
+@app.get("/exportacao")
+async def exportacao():
+    return get_exportacao()
+
+@app.get("/exportacao/{tipo}")
+async def exportacao_tipo(tipo: str):
+    return get_exportacao_tipo(tipo)
 
 # adicionando para testes 
 if __name__ == '__main__':
