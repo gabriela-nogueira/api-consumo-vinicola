@@ -32,10 +32,10 @@ def get_data_processamento(file: str, delimiter: str, ano: str = None):
             for row in reader:
                 if (ano is not None):
                     csv_data.append(dict({
-                            ano: row[ano],
-                            "id": row["id"],
-                            "control": row["control"],
-                            "cultivar": row["cultivar"]
+                        "id": row["id"],
+                        "control": row["control"],
+                        "cultivar": row["cultivar"],
+                        ano: row[ano]
                         }))
                 else:
                     csv_data.append(dict(row))

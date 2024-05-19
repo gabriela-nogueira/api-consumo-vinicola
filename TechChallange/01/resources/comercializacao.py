@@ -14,18 +14,26 @@ def get_dados_comercializacao():
 
     with StringIO(response.text) as csv_file:
         reader = csv.DictReader(csv_file, fieldnames=header, delimiter=';')
+        next(reader) # Pular a primeira linha do CSV
         for row in reader:
-            csv_data.append(dict(row))
+            retorno = {
+                "id": row["id"],
+                "produto": row["produto"],
+                "produto_2": row["produto_2"],
+                "anos": {year: row[year] for year in header[3:]} # header[3:] para recuperar somente os anos
+            }
+
+            csv_data.append(retorno)
 
     return csv_data
 
 def get_dados_comercializacao_ano(ano: str):
     if (ano is not None):
-        if (int(ano) < 1970 or int(ano) > 2022):
+        if (int(ano) < 1970 or int(ano) > 2023):
             raise HTTPException(status_code=404, detail="Ano informado não encontrado.")
         
     data = get_dados_comercializacao()
 
-    dados_por_ano = [{'id': row['id'] , 'produto': row['produto'], ano: row[ano]} for row in data]
+    dados_por_ano = [{'id': row['id'], 'produto': row['produto'], 'produto_2': row['produto_2'], ano: row['anos'][ano]} for row in data]
 
     return dados_por_ano

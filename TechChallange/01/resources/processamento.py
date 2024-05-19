@@ -16,7 +16,7 @@ def get_processamento_tipo(tipo: str):
     else:
         return "Tipo de processamento inválido"
 
-def get_processamento_ano(tipo: str, ano: str):
+def get_processamento_tipo_ano(tipo: str, ano: str):
     if tipo == "1":
         return get_data_processamento("ProcessaViniferas", "\t", ano)
     elif tipo == "2":
@@ -28,13 +28,17 @@ def get_processamento_ano(tipo: str, ano: str):
     else:
         return "Tipo de processamento inválido"
 
-def get_processamento():
+def get_processamento(ano = None):
     tipos_processamento = ['Viniferas','Americanas','Mesa','Semclass']
     csv_data = []
 
     for processamento in tipos_processamento:
         index_aux = tipos_processamento.index(processamento)
-        csv_data.append({'id_processamento': index_aux + 1, 'tipo_processamento' : processamento})
+        processamento_data = {
+            'id_processamento': index_aux + 1,
+            'tipo_processamento': processamento,
+            'dados':{}
+        }
         url = f"http://vitibrasil.cnpuv.embrapa.br/download/Processa{processamento}.csv"
         response = requests.get(url, headers={'Accept-Charset': 'latin-1'})
 
@@ -43,6 +47,24 @@ def get_processamento():
             for row in reader:
                 data = {}
                 data.update(dict({key : value.encode('latin-1').decode('utf-8') for key, value in row.items()}))
-                csv_data[tipos_processamento.index(processamento)].update({f"data_{data['control']}": data})
+
+                control_key = f"data_{data['control']}"
+
+                if control_key not in processamento_data['dados']:
+                    processamento_data['dados'][control_key] = {
+                        "id": data["id"],
+                        "control": data["control"],
+                        "cultivar": data["cultivar"],
+                        "anos": {}
+                    }
+
+                for key in data:
+                    if key.isdigit():
+                        if ano and key == ano:
+                            processamento_data['dados'][control_key]["anos"][key] = data[key]
+                        elif not ano:
+                            processamento_data['dados'][control_key]["anos"][key] = data[key]
+
+                csv_data.append(processamento_data)
 
     return csv_data
