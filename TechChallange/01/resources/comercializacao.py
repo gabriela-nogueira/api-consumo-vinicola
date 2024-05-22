@@ -7,6 +7,7 @@ from fastapi import HTTPException
 def get_dados_comercializacao():
     url = "http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv"
     response = requests.get(url)
+    response.encoding = "utf-8"
 
     csv_data = []
 
