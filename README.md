@@ -1,5 +1,12 @@
-# Machine-Learning-Engineering
-Conteúdo desenvolvido durante os estudos da Pós Tech - Machine Learning Engineering
+# TechChallenge 01 - API Embrapa
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+
+Esta API foi desenvolvida como parte do trabalho tech challenge da pós-graduação em Engenharia de Machine Learning. Ela foi projetada para ler os dados a partir de um CSV do site da Embrapa e disponibiliza-los de acordo com tema pelas rotas definidas.
+
+## Objetivo do Projeto
+
+O principal objetivo desta API é facilitar a coleta, armazenamento e manipulação de dados que são disponibilizados em um site que contém as informações sobre produção de vinhos, sucos e derivados provenientes do Rio Grande do Sul. Para isso, foi criado as rotas necessárias sobre cada aba do site que englobam: Produção, Processamento, Comercialização, Importação e Exportação.
 
 ### Próximos passos
 
