@@ -41,6 +41,7 @@ def get_processamento(ano = None):
         }
         url = f"http://vitibrasil.cnpuv.embrapa.br/download/Processa{processamento}.csv"
         response = requests.get(url, headers={'Accept-Charset': 'latin-1'})
+        # response.encoding = "utf-8"
 
         with StringIO(response.text) as csv_file:
             reader = csv.DictReader(csv_file, delimiter='\t')

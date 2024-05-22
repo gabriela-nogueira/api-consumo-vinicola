@@ -3,24 +3,51 @@ from resources.processamento import get_processamento_tipo, get_processamento, g
 from resources.producao import get_data_producao, get_data_producao_ano
 from resources.comercializacao import get_dados_comercializacao, get_dados_comercializacao_ano
 from resources.importacao import get_importacao, get_importacao_ano, get_importacao_tipo
-from resources.exportacao import get_exportacao, get_exportacao_tipo
+from resources.exportacao import get_exportacao, get_exportacao_tipo, get_exportacao_ano
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Fase 1: Tech Chalange - Machine Learning Enginnering"}
 
 @app.get('/importacao')
 async def importacao():
+    """ Retorna todos os dados de importação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro) """
     return get_importacao()
 
 @app.get('/importacao/{tipo}')
 async def importacao_tipo(tipo: str):
+    """ Retorna todos os dados de importação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+    O parâmetro [tipo] deve ser enviado utilizando os números entre 1 e 5 (qualquer valor diferente disso, irá retornar como erro)
+
+    Referência:
+    {
+        1: Vinhos
+        2: Espumantes
+        3: Frescas
+        4: Passas
+        5: Suco
+    }
+    """
     return get_importacao_tipo(tipo)
 
 @app.get('/importacao/{tipo}/{ano}')
 async def importacao_ano(tipo: str, ano: str):
+    """ Retorna todos os dados de importação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+        O parâmetro [tipo] deve ser enviado utilizando os números entre 1 e 5 (qualquer valor diferente disso, irá retornar como erro)
+
+        Referência:
+        {
+            1: Vinhos
+            2: Espumantes
+            3: Frescas
+            4: Passas
+            5: Suco
+        }
+        """
     return get_importacao_ano(tipo, ano)
 
 @app.get("/processamento")
@@ -82,6 +109,11 @@ async def processamento(ano: str):
 
 @app.get("/importacao_ano/{ano}")
 async def importacao(ano: str):
+    """ Retorna os dados de importação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+    O parâmetro [ano] deve ser enviado utilizando o intervalo de data informado acima (qualquer valor diferente disso, irá retornar como erro)
+
+    """
     return get_importacao(ano)
 
 @app.get("/producao")
@@ -96,19 +128,69 @@ async def get_producao(ano: str):
 
 @app.get("/comercializacao")
 async def get_comercializacao():
+    """ Retorna os dados de comercialização entre os anos de 1970 até 2022 (qualquer valor diferente disso, irá retornar como erro)"""
     return get_dados_comercializacao()
 
 @app.get("/comercializacao/{ano}")
 async def get_comercializacao(ano: str):
+    """ Retorna os dados de comercialização entre os anos de 1970 até 2022 (qualquer valor diferente disso, irá retornar como erro)
+     O parâmetro [ano] deve ser enviado utilizando o intervalo de data informado acima (qualquer valor diferente disso, irá retornar como erro)
+    """
     return get_dados_comercializacao_ano(ano)
 
 @app.get("/exportacao")
 async def exportacao():
+    """ Retorna todos os dados de exportação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro) """
     return get_exportacao()
 
 @app.get("/exportacao/{tipo}")
 async def exportacao_tipo(tipo: str):
+    """ Retorna todos os dados de exportação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+        O parâmetro [tipo] deve ser enviado utilizando os números entre 1 e 4 (qualquer valor diferente disso, irá retornar como erro)
+
+        Referência:
+        {
+            1: Vinhos
+            2: Espumantes
+            3: Uvas
+            4: Suco
+        }
+        """
     return get_exportacao_tipo(tipo)
+
+@app.get("/exportacao/{tipo}/{ano}")
+async def exportacao(tipo: str, ano: str):
+    """ Retorna todos os dados de exportação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+            O parâmetro [tipo] deve ser enviado utilizando os números entre 1 e 5 (qualquer valor diferente disso, irá retornar como erro)
+
+            Referência:
+            {
+                1: Vinhos
+                2: Espumantes
+                3: Uvas
+                4: Suco
+            }
+            """
+    return get_exportacao_ano(tipo, ano)
+
+
+@app.get("/exportacao_ano/{ano}")
+async def exportacao(ano: str):
+    """ Retorna todos os dados de importação entre os anos de 1970 até 2023 (qualquer valor diferente disso, irá retornar como erro)
+
+        O parâmetro [tipo] deve ser enviado utilizando os números entre 1 e 5 (qualquer valor diferente disso, irá retornar como erro)
+
+        Referência:
+        {
+            1: Vinhos
+            2: Espumantes
+            3: Uvas
+            4: Suco
+        }
+        """
+    return get_exportacao(ano)
 
 # adicionando para testes 
 if __name__ == '__main__':
